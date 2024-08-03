@@ -12,6 +12,7 @@ const (
 	lang        = "Go"
 	order       = "desc"
 	pageCnt     = 10
+	perPage     = 100
 	sort        = "stars"
 )
 
@@ -22,14 +23,19 @@ func main() {
 	cl := github.NewClient(ocl)
 
 	for i := 1; i <= pageCnt; i++ {
-		cl.Search.Repositories(ctx, fmt.Sprintf("language:%s", lang), &github.SearchOptions{
+		_, _, err := cl.Search.Repositories(ctx, fmt.Sprintf("language:%s", lang), &github.SearchOptions{
 			Sort:      sort,
 			Order:     order,
 			TextMatch: false,
 			ListOptions: github.ListOptions{
-				Page:    0,
-				PerPage: 0,
+				Page:    i,
+				PerPage: perPage,
 			},
 		})
+		if err != nil {
+			fmt.Printf("get repositories error:%v\n", err)
+			continue
+		}
+
 	}
 }
