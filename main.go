@@ -23,7 +23,7 @@ func main() {
 	cl := github.NewClient(ocl)
 
 	for i := 1; i <= pageCnt; i++ {
-		_, _, err := cl.Search.Repositories(ctx, fmt.Sprintf("language:%s", lang), &github.SearchOptions{
+		repos, _, err := cl.Search.Repositories(ctx, fmt.Sprintf("language:%s", lang), &github.SearchOptions{
 			Sort:      sort,
 			Order:     order,
 			TextMatch: false,
@@ -37,5 +37,12 @@ func main() {
 			continue
 		}
 
+		for _, repo := range repos.Repositories {
+			cloneRepo(repo)
+		}
 	}
+}
+
+func cloneRepo(repo github.Repository) {
+	fmt.Printf("cloning repo:%s", repo.Name)
 }
