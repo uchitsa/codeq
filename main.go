@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"github.com/google/go-github/github"
 	"golang.org/x/oauth2"
+	"os"
+	"os/exec"
 )
 
 const (
@@ -44,5 +46,14 @@ func main() {
 }
 
 func cloneRepo(repo github.Repository) {
-	fmt.Printf("cloning repo:%s", repo.Name)
+	fmt.Printf("cloning repo: [%s]", repo.Name)
+
+	cmd := exec.Command("git", "clone", repo.GetCloneURL(), repo.GetName())
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	err := cmd.Run()
+	if err != nil {
+		fmt.Printf("cloning repo [%s] error: %v\n", repo.GetName(), err)
+	}
 }
