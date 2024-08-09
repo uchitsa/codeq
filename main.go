@@ -46,7 +46,7 @@ func main() {
 }
 
 func cloneRepo(repo github.Repository) {
-	fmt.Printf("cloning repo: [%s]", repo.Name)
+	fmt.Printf("cloning repo: [%s]", repo.GetName())
 
 	cmd := exec.Command("git", "clone", repo.GetCloneURL(), repo.GetName())
 	cmd.Stdout = os.Stdout
