@@ -13,8 +13,8 @@ const (
 	githubToken = "my_github_token"
 	lang        = "Go"
 	order       = "desc"
-	pageCnt     = 10
-	perPage     = 100
+	pageCnt     = 1
+	perPage     = 10
 	sort        = "stars"
 )
 
