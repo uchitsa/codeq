@@ -1,6 +1,6 @@
 module github.com/uchitsa/codeq
 
-go 1.22.5
+go 1.23.1
 
 require (
 	github.com/google/go-github v17.0.0+incompatible // indirect
