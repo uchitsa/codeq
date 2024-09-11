@@ -24,7 +24,7 @@ func main() {
 	ocl := oauth2.NewClient(ctx, tokenSrc)
 	cl := github.NewClient(ocl)
 
-	for i := 1; i <= pageCnt; i++ {
+	for i := 0; i < pageCnt; i++ {
 		repos, _, err := cl.Search.Repositories(ctx, fmt.Sprintf("language:%s", lang), &github.SearchOptions{
 			Sort:      sort,
 			Order:     order,
