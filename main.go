@@ -42,6 +42,10 @@ func main() {
 		for _, repo := range repos.Repositories {
 			cloneRepo(repo)
 		}
+
+		for _, repo := range repos.Repositories {
+			goVetRepo(repo)
+		}
 	}
 }
 
@@ -49,6 +53,19 @@ func cloneRepo(repo github.Repository) {
 	fmt.Printf("cloning repo: [%s]", repo.GetName())
 
 	cmd := exec.Command("git", "clone", repo.GetCloneURL(), repo.GetName())
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	err := cmd.Run()
+	if err != nil {
+		fmt.Printf("cloning repo [%s] error: %v\n", repo.GetName(), err)
+	}
+}
+
+func goVetRepo(repo github.Repository) {
+	fmt.Printf("go vet repo: [%s]", repo.GetName())
+
+	cmd := exec.Command("go", "vet", repo.GetCloneURL(), repo.GetName())
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
